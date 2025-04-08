@@ -1,0 +1,89 @@
+Hydrometric Data Retriever
+
+A Python script that fetches real time discharge and water level data from USGS Water Services (United States) and ECCC Hydrometric Real-time API (Canada), 
+computes daily averages, and writes the results into a pre existing Excel workbook (FLOW and LEVEL sheets).
+
+______________________________________________________________________________________________________________
+
+Key Features
+
+•	Dual data sources – downloads instantaneous data for:
+•	USGS stations (parameterCd 00060 = discharge, 00065 = waterlevel)
+•	WSC / ECCC stations (Canadian hydrometric real-time collection)
+•	Time zone handling – converts all timestamps to UTC before processing.
+•	Daily aggregation – averages 15 min / hourly records into one value per day per station.
+•	Excel integration – looks up the correct row/column in an existing workbook and overwrites the daily cells.
+___________________________________________________________________________________________________________
+
+Prerequisites
+
+• Python 3.9 or newer   – needed to run the script
+• Microsoft Excel 2016 or newer – the target workbook (realtime_flows_levels.xlsx) must open correctly
+
+Required Python packages (listed in requirements.txt):
+  - requests
+  - pandas
+  - openpyxl
+  - numpy
+_______________________________________________________________________________________________________
+
+Installation
+
+# 1 – clone the repo
+git clone https://github.com/jithinjose25/hydrometric-data.git
+cd hydrometric-data
+
+# 2 – (Recommended) create & activate a virtual environment
+python -m venv venv
+venv\Scripts\activate
+
+# 3 – install dependencies
+pip install -r requirements.txt
+______________________________________________________________________________________________________
+
+Configuration
+
+Open the file “hydrometric_fetcher.py” and check these constants:
+
+• workbook_path       – full path to the Excel workbook that contains the FLOW and LEVEL sheets (the script needs write access).
+
+• USGS_station_list   – list of USGS station IDs the script will download.
+
+• WSC_station_list    – list of Canadian WSC station IDs the script will download.
+
+Tip: if you move or rename the workbook, update workbook_path so the script can still find it.
+_______________________________________________________________________________________________________
+
+USAGE
+-----
+
+Run the script from a terminal:
+
+    python hydrometric_fetcher.py
+
+The script will ask for:
+
+    Start date (YYYY-MM-DD):
+    End   date (YYYY-MM-DD):
+
+What happens next:
+
+  1. Downloads every instantaneous record between those dates for all stations
+     listed in USGS_station_list and WSC_station_list.
+  2. Converts every timestamp to UTC.
+  3. Replaces “no‑data” values (-999 and -999999) with NaN.
+  4. Computes the daily average discharge and water level for each station.
+  5. Writes those daily averages into the Excel workbook:
+       • Sheet “FLOW”  – discharge values
+       • Sheet “LEVEL” – water‑level values
+     (Dates go in rows 4 and below; station IDs are in row 2.)
+
+Extra:
+
+  • A CSV file called test.csv containing the raw ECCC records is saved to your
+    Downloads folder for troubleshooting.
+_____________________________________________________________________________________________________
+License
+
+This project is licensed under the MIT License – see LICENSE for details.
+

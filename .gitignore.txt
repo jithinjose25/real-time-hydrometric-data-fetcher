@@ -1,0 +1,47 @@
+# ---- Python byte‑code ------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ---- Virtual environments -------------------------------------------
+venv/
+.venv/
+env/
+ENV/
+.env
+
+# ---- Editor / IDE settings ------------------------------------------
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ---- OS cruft --------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# ---- Logs ------------------------------------------------------------
+*.log
+
+# ---- Pytest cache ----------------------------------------------------
+.pytest_cache/
+.cache/
+
+# ---- Coverage reports ------------------------------------------------
+htmlcov/
+.coverage
+
+# ---- Build / dist artifacts -----------------------------------------
+build/
+dist/
+*.egg-info/
+
+# ---- Excel temporary files ------------------------------------------
+~$*.xlsx
+
+# ---- Debug output from this script ----------------------------------
+test.csv            # raw ECCC dump written to Downloads
+
+# local workbook (not tracked)
+realtime_flows_levels.xlsx
+
